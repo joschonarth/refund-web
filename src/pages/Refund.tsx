@@ -1,4 +1,5 @@
 import { Input } from '@/components/Input'
+import { Select } from '@/components/Select'
 
 export function Refund() {
   return (
@@ -7,12 +8,14 @@ export function Refund() {
         <h1 className="text-xl font-bold text-gray-100">
           Solicitação de reembolso
         </h1>
+
         <p className="text-sm text-gray-200 mt-2 mb-4">
           Dados da despesa para solicitar reembolso.
         </p>
       </header>
 
       <Input required legend="Nome da solicitação" />
+      <Select required legend="Categoria" />
     </form>
   )
 }
