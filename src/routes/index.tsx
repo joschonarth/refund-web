@@ -8,14 +8,31 @@ import { EmployeeRoutes } from './EmployeeRoutes'
 
 const isLoading = false
 
+const session = {
+  user: {
+    role: 'employee',
+  },
+}
+
 export function Routes() {
+  function Route() {
+    switch (session?.user.role) {
+      case 'employee':
+        return <EmployeeRoutes />
+      case 'manager':
+        return <ManagerRoutes />
+      default:
+        return <AuthRoutes />
+    }
+  }
+
   if (isLoading) {
     return <Loading />
   }
 
   return (
     <BrowserRouter>
-      <ManagerRoutes />
+      <Route />
     </BrowserRouter>
   )
 }
