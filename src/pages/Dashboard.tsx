@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { AxiosError } from 'axios'
+
+import { api } from '@/services/api'
 
 import searchSvg from '@/assets/search.svg'
 import { CATEGORIES } from '@/utils/categories'
@@ -17,16 +20,32 @@ const REFUND_EXAMPLE = {
   categoryImg: CATEGORIES.services.icon,
 }
 
+const PER_PAGE = 5
+
 export function Dashboard() {
   const [name, setName] = useState('')
   const [page, setPage] = useState(1)
-  const [totalOfPage, setTotalOfPage] = useState(10)
+  const [totalOfPage, setTotalOfPage] = useState(0)
   const [refunds, SetRefunds] = useState<RefundItemProps[]>([REFUND_EXAMPLE])
 
-  function fetchRefunds(e: React.FormEvent) {
-    e.preventDefault()
+  async function fetchRefunds() {
+    try {
+      const response = await api.get(
+        `/refunds?name=${name.trim()}&page=${page}&perPage=${PER_PAGE}`,
+      )
 
-    console.log(name)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message)
+      }
+
+      alert(
+        'Ocorreu um erro inesperado ao tentar carregar os reembolsos. Por favor, tente novamente.',
+      )
+    }
   }
 
   function handlePagination(action: 'next' | 'previous') {
@@ -42,6 +61,10 @@ export function Dashboard() {
       return prevPage
     })
   }
+
+  useEffect(() => {
+    fetchRefunds()
+  }, [])
 
   return (
     <div className="bg-gray-500 rounded-xl p-10 md:min-w-[768px]">
