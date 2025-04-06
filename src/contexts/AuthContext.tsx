@@ -18,10 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   function save(data: UserAPIResponse) {
     localStorage.setItem(`${LOCAL_STORAGE_KEY}:user`, JSON.stringify(data.user))
-    localStorage.setItem(
-      `${LOCAL_STORAGE_KEY}:token`,
-      JSON.stringify(data.token),
-    )
+    localStorage.setItem(`${LOCAL_STORAGE_KEY}:token`, data.token)
 
     api.defaults.headers.common.Authorization = `Bearer ${data.token}`
 
