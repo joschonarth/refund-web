@@ -2,6 +2,6 @@ export enum CategoriesAPIEnum {
   Food = 'food',
   Others = 'others',
   Services = 'services',
-  Transporte = 'transport',
+  Transport = 'transport',
   Accommodation = 'accommodation',
 }
